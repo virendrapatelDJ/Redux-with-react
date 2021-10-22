@@ -8,8 +8,14 @@ import CounterClassBased from "./components/CounterClassBased";
 function App() {
   return (
     <Provider store={store}>
-      <Counter />
-      <CounterClassBased />
+      <div className="row">
+        <div className="col">
+          <Counter />
+        </div>
+        <div className="col">
+          <CounterClassBased />
+        </div>
+      </div>
     </Provider>
   );
 }

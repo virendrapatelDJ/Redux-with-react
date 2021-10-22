@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { counterActions } from "../store";
 
@@ -37,22 +38,26 @@ export default function Counter() {
             </button>
             <button
               onClick={() => increase(5)}
-              className="btn btn-danger btn-lg m-3"
+              className="btn btn-success btn-lg m-3"
             >
               Increase By 5
             </button>
-            <button
-              onClick={() => decrease(5)}
-              className="btn btn-danger btn-lg m-3"
-            >
-              Decrease By 5
-            </button>
-            <button
-              onClick={() => decrease(1)}
-              className="btn btn-primary btn-lg m-3"
-            >
-              Decrement By 1
-            </button>
+            {counter > 0 && (
+              <Fragment>
+                <button
+                  onClick={() => decrease(5)}
+                  className="btn btn-danger btn-lg m-3"
+                >
+                  Decrease By 5
+                </button>
+                <button
+                  onClick={() => decrease(1)}
+                  className="btn btn-danger btn-lg m-3"
+                >
+                  Decrement By 1
+                </button>
+              </Fragment>
+            )}
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ const counterActions = {
   INCREMENT: "increment",
   DECREMENT: "decrement",
 };
-const initialState = { counter: 1 };
+const initialState = { counter: 0 };
 
 const counterReducer = (state = initialState, action) => {
   const { type, payload } = action;

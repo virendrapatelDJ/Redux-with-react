@@ -28,7 +28,7 @@ class CounterClassBased extends Component {
               </button>
               <button
                 onClick={() => this.props.increase(5)}
-                className="btn btn-danger btn-lg m-3"
+                className="btn btn-success btn-lg m-3"
               >
                 Increase By 5
               </button>
@@ -40,7 +40,7 @@ class CounterClassBased extends Component {
               </button>
               <button
                 onClick={() => this.props.decrease(1)}
-                className="btn btn-primary btn-lg m-3"
+                className="btn btn-danger btn-lg m-3"
               >
                 Decrement By 1
               </button>
