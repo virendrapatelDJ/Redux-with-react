@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { counterActions } from "../store";
 
 export default function Counter() {
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
 
   useEffect(() => {

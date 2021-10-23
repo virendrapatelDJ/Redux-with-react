@@ -1,29 +1,55 @@
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 
 const counterActions = {
   INCREMENT: "increment",
   DECREMENT: "decrement",
 };
-const initialState = { counter: 0 };
+const multiplierActions = {
+  MULTIPLY: "multiplierActions/multiply",
+  RESET: "multiplierActions/reset",
+};
+const counterReducerInitialState = { value: 0 };
+const multiplierInitialState = { result: 1 };
 
-const counterReducer = (state = initialState, action) => {
+const counterReducer = (state = counterReducerInitialState, action) => {
   const { type, payload } = action;
   console.log({ state, action });
 
   if (type === counterActions.INCREMENT) {
     return {
-      counter: state.counter + payload,
+      value: state.value + payload,
     };
   }
   if (type === counterActions.DECREMENT) {
     return {
-      counter: state.counter - payload,
+      value: state.value - payload,
     };
   }
 
   return state;
 };
+const multiplierReducer = (state = multiplierInitialState, action) => {
+  const { type, payload } = action;
+  console.log({ state, action });
 
-const store = createStore(counterReducer);
+  if (type === multiplierActions.MULTIPLY) {
+    return {
+      result: state.result * payload,
+    };
+  }
+  if (type === multiplierActions.RESET) {
+    return multiplierInitialState;
+  }
 
-export { counterActions, store };
+  return state;
+};
+
+// const store = createStore(counterReducer);
+
+const rootReducer = combineReducers({
+  multiplier: multiplierReducer,
+  counter: counterReducer,
+});
+
+const store = createStore(rootReducer);
+export { multiplierActions, counterActions, store };
