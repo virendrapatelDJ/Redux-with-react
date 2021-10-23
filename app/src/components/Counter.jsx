@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterActions } from "../store/actions";
+import { counterActions } from "../store";
 
 export default function Counter() {
   const counter = useSelector((state) => state.counter.value);
@@ -13,51 +13,44 @@ export default function Counter() {
 
   const increase = (value) => {
     console.log({ value });
-    dispatch({ type: counterActions.INCREMENT, payload: value });
+    dispatch(counterActions.increase(value));
   };
   const decrease = (value) => {
     console.log({ value });
-    dispatch({ type: counterActions.DECREMENT, payload: value });
+    dispatch(counterActions.decrease(value));
   };
 
   return (
     <div className="container mt-4 p-4">
       <div className="shadow rounded p-4 m-4">
-        <p className="display-6 text-center">Function Based Component</p>
+        <div className=" text-center">
+          <p className="display-6">Redux Counter</p>
+          <p>Function Based Component</p>
+        </div>
         <hr />
         <div className="counter text-center">
           <h1 className=" col-4 mx-auto p-4 rounded display-1">{counter}</h1>
           <hr />
 
           <div className="flex justify-content-center mx-auto">
-            <button
-              onClick={() => increase(1)}
-              className="btn btn-success btn-lg m-3"
-            >
-              Increment By 1
-            </button>
-            <button
-              onClick={() => increase(5)}
-              className="btn btn-success btn-lg m-3"
-            >
-              Increase By 5
-            </button>
-            {counter > 0 && (
-              <Fragment>
-                <button
-                  onClick={() => decrease(5)}
-                  className="btn btn-danger btn-lg m-3"
-                >
-                  Decrease By 5
-                </button>
-                <button
-                  onClick={() => decrease(1)}
-                  className="btn btn-danger btn-lg m-3"
-                >
-                  Decrement By 1
-                </button>
-              </Fragment>
-            )}
+            {new Array(10).fill().map((_, index) => (
+              <button
+                onClick={() => increase(index + 1)}
+                className="btn btn-success btn-sm m-1"
+              >
+                + {index + 1}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-content-center mx-auto">
+            {new Array(10).fill().map((_, index) => (
+              <button
+                onClick={() => decrease(index + 1)}
+                className="btn btn-danger btn-sm m-1"
+              >
+                - {index + 1}
+              </button>
+            ))}
           </div>
         </div>
       </div>

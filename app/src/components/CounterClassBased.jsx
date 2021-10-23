@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { counterActions } from "../store/actions";
+import { counterActions } from "../store";
 
 class CounterClassBased extends Component {
   constructor(props) {
@@ -11,39 +11,38 @@ class CounterClassBased extends Component {
     return (
       <div className="container mt-4 p-4">
         <div className="shadow rounded p-4 m-4">
-          <p className="display-6 text-center">Class Based Component</p>
+          <div className=" text-center">
+            <p className="display-6">Redux Counter</p>
+            <p>Class Based Component</p>
+          </div>
           <hr />
           <div className="counter text-center">
-            <h1 className=" col-4 mx-auto p-4 rounded display-1">
+            <h1 className="col-4 mx-auto rounded display-1">
               {this.props.counter}
             </h1>
             <hr />
 
             <div className="flex justify-content-center mx-auto">
-              <button
-                onClick={() => this.props.increase(1)}
-                className="btn btn-success btn-lg m-3"
-              >
-                Increment By 1
-              </button>
-              <button
-                onClick={() => this.props.increase(5)}
-                className="btn btn-success btn-lg m-3"
-              >
-                Increase By 5
-              </button>
-              <button
-                onClick={() => this.props.decrease(5)}
-                className="btn btn-danger btn-lg m-3"
-              >
-                Decrease By 5
-              </button>
-              <button
-                onClick={() => this.props.decrease(1)}
-                className="btn btn-danger btn-lg m-3"
-              >
-                Decrement By 1
-              </button>
+              <div className="flex justify-content-center mx-auto">
+                {new Array(10).fill().map((_, index) => (
+                  <button
+                    onClick={() => this.props.increase(index + 1)}
+                    className="btn btn-success btn-sm m-1"
+                  >
+                    + {index + 1}
+                  </button>
+                ))}
+              </div>
+              <div className="flex justify-content-center mx-auto">
+                {new Array(10).fill().map((_, index) => (
+                  <button
+                    onClick={() => this.props.decrease(index + 1)}
+                    className="btn btn-danger btn-sm m-1"
+                  >
+                    - {index + 1}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -61,10 +60,8 @@ const mapDispatchToProps = (dispatch) => {
   console.log({ dispatch });
 
   return {
-    increase: (value) =>
-      dispatch({ type: counterActions.INCREMENT, payload: value }),
-    decrease: (value) =>
-      dispatch({ type: counterActions.DECREMENT, payload: value }),
+    increase: (value) => dispatch(counterActions.increase(value)),
+    decrease: (value) => dispatch(counterActions.decrease(value)),
   };
 };
 

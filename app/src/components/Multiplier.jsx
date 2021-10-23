@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { multiplierActions } from "../store/actions";
+import { multiplierActions } from "../store";
 
 export default function Multiplier() {
   const result = useSelector((state) => state.multiplier.result);
   const dispatch = useDispatch();
+  const { multiply: multiplyAction, reset: resetAction } = multiplierActions;
 
   const multiply = (value) => {
     console.log({ value });
-    dispatch({ type: multiplierActions.MULTIPLY, payload: value });
+    dispatch(multiplyAction(value));
   };
 
   const reset = () => {
-    dispatch({ type: multiplierActions.RESET });
+    dispatch(resetAction());
   };
 
   return (
@@ -26,19 +26,20 @@ export default function Multiplier() {
           <hr />
 
           <div className="flex justify-content-center mx-auto">
+            {new Array(10).fill().map((_, index) => (
+              <button
+                onClick={() => multiply(index + 1)}
+                className="btn btn-primary btn-sm m-1"
+              >
+                * {index + 1}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-content-center mx-auto">
             <button
-              onClick={() => multiply(2)}
-              className="btn btn-success btn-lg m-3"
+              onClick={() => reset()}
+              className="btn btn-success btn-sm m-1"
             >
-              Multiply By 2
-            </button>
-            <button
-              onClick={() => multiply(5)}
-              className="btn btn-success btn-lg m-3"
-            >
-              Multiply By 5
-            </button>
-            <button onClick={reset} className="btn btn-primary btn-lg m-3">
               Reset
             </button>
           </div>

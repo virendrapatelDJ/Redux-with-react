@@ -1,23 +1,24 @@
-import { counterActions } from "./actions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const counterReducerInitialState = { value: 0 };
 
-const counterReducer = (state = counterReducerInitialState, action) => {
-  const { type, payload } = action;
-  console.log({ state, action });
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: counterReducerInitialState,
 
-  if (type === counterActions.INCREMENT) {
-    return {
-      value: state.value + payload,
-    };
-  }
-  if (type === counterActions.DECREMENT) {
-    return {
-      value: state.value - payload,
-    };
-  }
+  reducers: {
+    increase: (state, { payload }) => {
+      console.log("counter reducer");
+      state.value += payload || 1;
+    },
+    decrease: (state, { payload }) => {
+      state.value -= payload || 1;
+    },
+  },
+});
 
-  return state;
-};
+const counterReducer = counterSlice.reducer;
+const counterActions = counterSlice.actions;
 
 export default counterReducer;
+export { counterActions };
