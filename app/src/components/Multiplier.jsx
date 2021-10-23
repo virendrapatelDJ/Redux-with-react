@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { multiplierActions } from "../store";
+import { multiplierActions } from "../store/actions";
 
 export default function Multiplier() {
   const result = useSelector((state) => state.multiplier.result);

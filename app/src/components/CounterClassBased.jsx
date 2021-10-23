@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { counterActions } from "../store";
+import { counterActions } from "../store/actions";
 
 class CounterClassBased extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterActions } from "../store";
+import { counterActions } from "../store/actions";
 
 export default function Counter() {
   const counter = useSelector((state) => state.counter.value);
