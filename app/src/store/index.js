@@ -7,10 +7,13 @@ const studentSlice = createSlice({
     saveAllStudents(state, action) {
       state.data = action.payload;
     },
+    addMoreStudents(state, action) {
+      state.data = [...action.payload, ...state.data];
+    },
     deleteStudent(state, action) {
-      const { id } = action.payload;
+      const id = action.payload.id;
       const students = state.data;
-      const index = students.data.findIndex((student) => student.id === id);
+      const index = students.findIndex((student) => student.id === id);
       students.splice(index, 1);
     },
   },
