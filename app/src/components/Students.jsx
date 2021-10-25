@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { studentActions } from "../store";
+import { actions } from "../store";
 
 function StudentTableHeader() {
   return (
@@ -56,29 +56,20 @@ export default function Students() {
   }, []);
 
   function fetchData() {
-    fetch("https://reqres.in/api/users?per_page=2&page=" + page)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(studentActions.saveAllStudents(data.data));
-      });
-
-    setPage(page + 1);
-  }
-  function addMoreStudents() {
-    fetch("https://reqres.in/api/users?per_page=2&page=" + page)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(studentActions.addMoreStudents(data.data));
-      });
-
+    dispatch(actions.fetchStudents(page));
     setPage(page + 1);
   }
 
   const handleDelete = (student) => {
-    dispatch(studentActions.deleteStudent(student));
+    dispatch(actions.deleteStudent(student));
   };
   const handleAddMore = () => {
-    addMoreStudents();
+    dispatch(actions.addMoreStudents(page));
+    setPage(page + 1);
+  };
+  const handleReset = () => {
+    dispatch(actions.resetStudents());
+    setPage(1);
   };
 
   return (
@@ -86,8 +77,11 @@ export default function Students() {
       <h1 className="display-3">Redux Students</h1>
       <hr />
       <div className="mt-3">
-        <button className="btn btn-success" onClick={handleAddMore}>
+        <button className="btn btn-success me-4" onClick={handleAddMore}>
           Add More
+        </button>
+        <button className="btn btn-success me-4" onClick={handleReset}>
+          Reset
         </button>
       </div>
       <hr />
