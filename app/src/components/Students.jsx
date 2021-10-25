@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../store";
+import { studentSagaActions } from "../store/sagas/students";
 
 function StudentTableHeader() {
   return (
@@ -56,19 +56,23 @@ export default function Students() {
   }, []);
 
   function fetchData() {
-    dispatch(actions.fetchStudents(page));
+    console.log("Fetch Data - 1");
+    dispatch({ type: studentSagaActions.FETCH_USERS });
     setPage(page + 1);
   }
 
   const handleDelete = (student) => {
-    dispatch(actions.deleteStudent(student));
+    dispatch({ type: studentSagaActions.DELETE_USER, payload: student });
   };
   const handleAddMore = () => {
-    dispatch(actions.addMoreStudents(page));
+    dispatch({
+      type: studentSagaActions.FETCH_MORE_USERS,
+      payload: { page },
+    });
     setPage(page + 1);
   };
   const handleReset = () => {
-    dispatch(actions.resetStudents());
+    dispatch({ type: studentSagaActions.RESET_USERS });
     setPage(1);
   };
 
@@ -86,7 +90,7 @@ export default function Students() {
       </div>
       <hr />
       {students?.length ? (
-        <table class="table table-bordered text-center ">
+        <table className="table table-bordered text-center ">
           <StudentTableHeader />
           <StudentTableBody students={students} onDelete={handleDelete} />
         </table>

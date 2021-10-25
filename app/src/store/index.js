@@ -1,10 +1,13 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import { studentSaga } from "./sagas/students";
 
 const studentSlice = createSlice({
   name: "students",
   initialState: { data: [] },
   reducers: {
     saveAllStudents(state, action) {
+      console.log("Fetch Data - 5");
       state.data = action.payload;
     },
     addMoreStudents(state, action) {
@@ -22,47 +25,16 @@ const studentSlice = createSlice({
   },
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = configureStore({
   devTools: true,
+  middleware: [sagaMiddleware],
   reducer: {
     students: studentSlice.reducer,
   },
 });
 
-function fetchStudents(page, per_page = 2) {
-  return (dispatch) => {
-    fetch(`https://reqres.in/api/users?per_page=${per_page}&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(studentSlice.actions.saveAllStudents(data.data));
-      });
-  };
-}
-function addMoreStudents(page, per_page = 2) {
-  return (dispatch) => {
-    fetch(`https://reqres.in/api/users?per_page=${per_page}&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(studentSlice.actions.addMoreStudents(data.data));
-      });
-  };
-}
-function deleteStudent(student) {
-  return (dispatch) => {
-    dispatch(studentSlice.actions.deleteStudent(student));
-  };
-}
-function resetStudents() {
-  return (dispatch) => {
-    dispatch(studentSlice.actions.reset());
-  };
-}
+sagaMiddleware.run(studentSaga);
 
-const actions = {
-  fetchStudents,
-  addMoreStudents,
-  deleteStudent,
-  resetStudents,
-};
-
-export { store, actions };
+export { store, studentSlice };
